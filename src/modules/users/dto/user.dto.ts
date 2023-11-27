@@ -4,3 +4,12 @@ export type CreateUserDTO = {
   email: string;
   name: string;
 };
+export type OutputUserDTO = {
+  id: string;
+  createdAt: Date;
+} & CreateUserDTO;
+
+export type FindByUsernameOrEmailDTO = {
+  username: string;
+  email: string;
+};
