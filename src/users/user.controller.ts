@@ -1,4 +1,5 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { randomUUID } from 'crypto';
 
 type ParamsUser = {
   id: string;
@@ -10,15 +11,29 @@ type QueryUser = {
   lastName: string;
 };
 
+type BodyUser = {
+  name: string;
+  age: string;
+};
+
 @Controller()
+@Controller('/users')
 export class UserController {
-  @Get('users/:id/:enterpriseId')
+  @Get('/:id/:enterpriseId')
   findById(@Param() params: ParamsUser) {
     return `User ID: ${params.id} - Enterprise ID: ${params.enterpriseId}`;
   }
 
-  @Get('users/:id')
+  @Get('/:id')
   findByPages(@Query() queries: QueryUser) {
     return 'Queries' + JSON.stringify(queries);
+  }
+
+  @Post('/create')
+  create(@Body() body: BodyUser) {
+    return {
+      id: randomUUID(),
+      ...body,
+    };
   }
 }
