@@ -15,12 +15,15 @@ export class UserPrismaRepository implements IUserRepository {
     data: FindByUsernameOrEmailDTO,
   ): Promise<OutputUserDTO> {
     return await this.prismaService.user.findFirst({
-      where: {
-        OR: [{ username: data.username }, { email: data.email }],
-      },
+      where: { OR: [{ username: data.username }, { email: data.email }] },
     });
   }
+
   async save(data: CreateUserDTO): Promise<OutputUserDTO> {
     return await this.prismaService.user.create({ data });
+  }
+
+  async findByUsername(username: string): Promise<OutputUserDTO> {
+    return await this.prismaService.user.findUnique({ where: { username } });
   }
 }
