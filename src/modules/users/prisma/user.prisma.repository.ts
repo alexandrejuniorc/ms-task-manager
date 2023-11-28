@@ -26,4 +26,8 @@ export class UserPrismaRepository implements IUserRepository {
   async findByUsername(username: string): Promise<OutputUserDTO> {
     return await this.prismaService.user.findUnique({ where: { username } });
   }
+
+  async findById(id: string): Promise<OutputUserDTO> {
+    return await this.prismaService.user.findUnique({ where: { id } });
+  }
 }
