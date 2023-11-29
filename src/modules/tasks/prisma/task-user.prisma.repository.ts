@@ -1,7 +1,9 @@
 import { PrismaService } from 'src/infrastructure/database/prisma.service';
 import { ITaskUserRepository } from '../repositories/task-user.repository';
 import { TaskUserRequestDTO, TaskUserResponseDTO } from '../dto/task-user.dto';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class TaskUserPrismaRepository implements ITaskUserRepository {
   constructor(private prismaService: PrismaService) {}
 
@@ -10,19 +12,15 @@ export class TaskUserPrismaRepository implements ITaskUserRepository {
       data: {
         task: {
           create: {
-            title: data.title,
             description: data.description,
+            title: data.title,
+            status: data.status,
+            priority: data.priority,
             startsAt: data.startsAt,
             endsAt: data.endsAt,
-            priority: data.priority,
-            status: data.status,
           },
         },
-        user: {
-          connect: {
-            id: data.userId,
-          },
-        },
+        user: { connect: { id: data.userId } },
       },
     });
   }
