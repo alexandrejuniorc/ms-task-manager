@@ -4,7 +4,9 @@ import {
   Get,
   Post,
   Request,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
 import { CreateUserUseCase } from './use-cases/create-user.use-case';
@@ -15,6 +17,8 @@ import {
   CreateUserResponseSchemaDTO,
   CreateUserSchemaDTO,
 } from './schemas/create-user.schema';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { FileDTO } from './dto/user.dto';
 
 @Controller('/users')
 export class UserController {
@@ -34,5 +38,12 @@ export class UserController {
   @UseGuards(AuthGuard)
   async profile(@Request() request) {
     return this.profileUserUseCase.execute(request.user.sub);
+  }
+
+  @Post('/avatar')
+  @UseGuards(AuthGuard)
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadAvatar(@Request() request, @UploadedFile() file: FileDTO) {
+    console.log({ file });
   }
 }
