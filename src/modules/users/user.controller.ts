@@ -27,7 +27,7 @@ export class UserController {
   @UsePipes(new CreateUserValidationPipe())
   async create(@Body() data: CreateUserSchemaDTO) {
     const user = await this.createUserUseCase.execute(data);
-    return CreateUserResponseSchemaDTO.safeParse(user);
+    return CreateUserResponseSchemaDTO.parse(user);
   }
 
   @Get('/profile')
