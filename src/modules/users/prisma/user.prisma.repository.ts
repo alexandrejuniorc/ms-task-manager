@@ -13,7 +13,7 @@ export class UserPrismaRepository implements IUserRepository {
 
   async findByUsernameOrEmail(
     data: FindByUsernameOrEmailDTO,
-  ): Promise<OutputUserDTO> {
+  ): Promise<OutputUserDTO | null> {
     return await this.prismaService.user.findFirst({
       where: { OR: [{ username: data.username }, { email: data.email }] },
     });
@@ -23,11 +23,11 @@ export class UserPrismaRepository implements IUserRepository {
     return await this.prismaService.user.create({ data });
   }
 
-  async findByUsername(username: string): Promise<OutputUserDTO> {
+  async findByUsername(username: string): Promise<OutputUserDTO | null> {
     return await this.prismaService.user.findUnique({ where: { username } });
   }
 
-  async findById(id: string): Promise<OutputUserDTO> {
+  async findById(id: string): Promise<OutputUserDTO | null> {
     return await this.prismaService.user.findUnique({ where: { id } });
   }
 }
