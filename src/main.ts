@@ -9,7 +9,7 @@ async function bootstrap() {
     .setTitle('API Task Manager')
     .setDescription('API para gerenciamento de tarefas do usuário')
     .setVersion('1.0')
-    .addServer(process.env.DATABASE_URL ?? 'http://localhost:3000')
+    .setBasePath(process.env.DATABASE_URL || 'localhost:3000')
     .addBearerAuth()
     .build();
 
