@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Request,
   UploadedFile,
   UseGuards,
@@ -19,12 +20,14 @@ import {
 } from './schemas/create-user.schema';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileDTO } from './dto/user.dto';
+import { UploadAvatarUserUseCase } from './use-cases/upload-avatar-user.use-case';
 
 @Controller('/users')
 export class UserController {
   constructor(
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly profileUserUseCase: ProfileUserUseCase,
+    private readonly uploadAvatarUserUseCase: UploadAvatarUserUseCase,
   ) {}
 
   @Post()
@@ -40,10 +43,15 @@ export class UserController {
     return this.profileUserUseCase.execute(request.user.sub);
   }
 
-  @Post('/avatar')
-  @UseGuards(AuthGuard)
+  @Put('/avatar')
   @UseInterceptors(FileInterceptor('file'))
+  @UseGuards(AuthGuard)
   async uploadAvatar(@Request() request, @UploadedFile() file: FileDTO) {
-    console.log({ file });
+    const result = await this.uploadAvatarUserUseCase.execute({
+      file,
+      userId: request.user.sub,
+    });
+
+    return result;
   }
 }

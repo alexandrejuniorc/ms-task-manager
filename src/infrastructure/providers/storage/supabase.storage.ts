@@ -17,6 +17,6 @@ export class SupabaseStorage implements IStorage {
   async upload(file: FileDTO, folder: string): Promise<any> {
     return await this.client.storage
       .from(process.env.SUPABASE_BUCKET ?? '')
-      .upload(`${folder}/${file.originalname}`, file.buffer, { upsert: true });
+      .upload(`${folder}/` + file.originalname, file.buffer, { upsert: true });
   }
 }

@@ -11,4 +11,5 @@ export abstract class IUserRepository {
   abstract save(data: CreateUserDTO): Promise<OutputUserDTO>;
   abstract findByUsername(username: string): Promise<OutputUserDTO | null>;
   abstract findById(id: string): Promise<OutputUserDTO | null>;
+  abstract uploadAvatar(id: string, path: string): Promise<void>;
 }

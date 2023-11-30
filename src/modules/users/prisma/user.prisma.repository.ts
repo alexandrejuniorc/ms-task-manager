@@ -30,4 +30,11 @@ export class UserPrismaRepository implements IUserRepository {
   async findById(id: string): Promise<OutputUserDTO | null> {
     return await this.prismaService.user.findUnique({ where: { id } });
   }
+
+  async uploadAvatar(id: string, path: string): Promise<void> {
+    await this.prismaService.user.update({
+      data: { avatarUrl: path },
+      where: { id },
+    });
+  }
 }
