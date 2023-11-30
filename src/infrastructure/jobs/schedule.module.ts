@@ -16,13 +16,18 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           client: {
             brokers: ['127.0.0.1:9092'],
           },
+          consumer: {
+            groupId: 'gp_app_task_manager',
+          },
+          producer: {
+            allowAutoTopicCreation: false,
+          },
         },
       },
     ]),
   ],
   providers: [
     NotificationTaskUserSchedule,
-
     {
       provide: ITaskUserRepository,
       useClass: TaskUserPrismaRepository,
