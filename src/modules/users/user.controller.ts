@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserUseCase } from './use-cases/create-user.use-case';
 import { CreateUserValidationPipe } from './pipe/create-user.validation.pipe';
-import { AuthGuard } from 'src/infrastructure/providers/auth-guard.provider';
+
 import { ProfileUserUseCase } from './use-cases/profile-user.use-case';
 import {
   CreateUserResponseSchemaDTO,
@@ -21,6 +21,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileDTO } from './dto/user.dto';
 import { UploadAvatarUserUseCase } from './use-cases/upload-avatar-user.use-case';
+import { AuthGuard } from '../../infrastructure/providers/auth-guard.provider';
 
 @Controller('/users')
 export class UserController {

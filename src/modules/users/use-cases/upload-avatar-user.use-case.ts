@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AvatarDTO } from '../dto/user.dto';
-import { IStorage } from 'src/infrastructure/providers/storage/storage';
+import { IStorage } from '../../../infrastructure/providers/storage/storage';
 import { IUserRepository } from '../repositories/user.repository';
 import { extname } from 'path';
 
